@@ -3,6 +3,7 @@
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PedidoController;
 
 // Tienda
 Route::get('/', [ClienteController::class, 'tienda'])->name('cliente.tienda');
@@ -27,3 +28,5 @@ Route::post('/logout', [ClienteController::class, 'logout'])->name('logout');
 Route::get('/register', [RegisterController::class, 'show'])->name('register.show'); // 👈
 Route::post('/register', [RegisterController::class, 'register'])->name('register.store'); // 👈
 
+Route::post('/realizar-pedido', [PedidoController::class, 'realizar'])->name('pedido.realizar');
+Route::get('/admin/pedidos', [AdminController::class, 'verPedidos'])->name('admin.pedidos');

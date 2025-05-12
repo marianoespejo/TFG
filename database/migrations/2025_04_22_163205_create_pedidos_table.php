@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
-            $table->json('productos'); // guardamos productos como JSON {producto_id: cantidad}
+            $table->unsignedBigInteger('usuario_id')->nullable();
+            $table->string('correo')->nullable(); // Para no registrados
+            $table->json('productos');
             $table->decimal('total', 8, 2);
-            $table->string('estado')->default('pendiente'); // pendiente, enviado, cancelado
+            $table->string('estado')->default('pendiente');
             $table->timestamps();
         });
     }

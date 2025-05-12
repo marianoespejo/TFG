@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use App\Models\Pedido;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -76,5 +78,11 @@ class AdminController extends Controller
     {
         $producto->delete();
         return redirect()->route('admin.index');
+    }
+
+    public function verPedidos()
+    {
+        $pedidos = Pedido::latest()->get();
+        return view('admin.pedidos', compact('pedidos'));
     }
 }

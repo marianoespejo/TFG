@@ -13,7 +13,7 @@ class ClienteController extends Controller
     {
         $query = Producto::query();
 
-        // Filtro por nombre (buscador)
+        // Filtro de búsqueda
         if ($request->filled('buscar')) {
             $query->where('nombre', 'like', '%' . $request->buscar . '%');
         }

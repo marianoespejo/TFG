@@ -49,6 +49,24 @@
             background-color: #333;
         }
 
+        .boton-cambio {
+            background-color: #555;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 10px;
+            margin-bottom: 30px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .boton-cambio:hover {
+            background-color: #333;
+        }
+
+
         table {
             width: 100%;
             border-collapse: separate;
@@ -139,6 +157,7 @@
     <div class="barra-header">
         <img src="{{ asset('imagenes/logo-esmo.png') }}" alt="ESMO Logo">
         <h1>Gestión de Productos</h1>
+        <a href="{{ route('admin.pedidos') }}" class="boton-cambio">🧾 Ver pedidos</a>
     </div>
 
     <a href="{{ route('admin.create') }}" class="boton-crear">+ Añadir producto</a>

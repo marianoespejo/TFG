@@ -78,6 +78,7 @@
     <h3>Tu carrito</h3>
     <ul id="listaCarrito"></ul>
     <p><strong>Total: €<span id="totalCarrito">0.00</span></strong></p>
+    <button onclick="finalizarCompra()">Finalizar compra</button>
     <button onclick="toggleCarrito()">Cerrar</button>
 </div>
 
@@ -144,6 +145,42 @@
 
     actualizarVistaCarrito();
 </script>
+<script>
+function finalizarCompra() {
+    if (!carrito.length) return alert('Tu carrito está vacío');
+
+    const total = parseFloat(document.getElementById('totalCarrito').textContent);
+    const productos = carrito.map(p => ({ id: p.id, cantidad: p.cantidad }));
+    const usuarioId = {{ session('usuario_id') ? 'true' : 'false' }};
+
+    let correo = null;
+    if (!usuarioId) {
+        correo = prompt("Introduce tu correo para recibir el pedido:");
+        if (!correo) return alert("Debes introducir un correo válido.");
+    }
+
+    fetch('/realizar-pedido', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ productos, total, correo })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert("Pedido realizado con éxito.");
+            localStorage.removeItem('carrito');
+            location.reload();
+        } else {
+            alert("Error al realizar el pedido.");
+        }
+    })
+    .catch(() => alert("Error de servidor."));
+}
+</script>
+
 
 </body>
 </html>
