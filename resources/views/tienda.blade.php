@@ -35,16 +35,22 @@
     </form>
 
     <div class="contenedor-acciones">
-        @if (session('usuario_id'))
-            <span>Hola, {{ session('usuario_nombre') }}</span>
-            <form method="POST" action="{{ route('logout') }}" style="display:inline;">
-                @csrf
-                <button type="submit" class="boton-nav" style="background: #eee;">Cerrar sesión</button>
-            </form>
-        @else
-            <a href="{{ route('login') }}" class="boton-nav">Iniciar sesión</a>
-            <a href="{{ route('register.show') }}" class="boton-nav">Registrarse</a>
-        @endif
+    @if (session('usuario_id'))
+        <div style="position: relative;">
+            <button class="boton-nav" onclick="toggleMenu()">Hola, {{ session('usuario_nombre') }} ▼</button>
+            <div id="menuUsuario" style="display:none; position:absolute; right:0; background:white; border:1px solid #ccc; border-radius: 8px; padding:10px; z-index:999;">
+                <a href="{{ route('usuario.pedidos') }}" class="boton-nav" style="display:block; margin-bottom: 8px;">Mis pedidos</a>
+                <a href="{{ route('usuario.info') }}" class="boton-nav" style="display:block;">Mi información</a>
+            </div>
+        </div>
+        <form method="POST" action="{{ route('logout') }}" style="display:inline;">
+            @csrf
+            <button type="submit" class="boton-nav" style="background: #eee;">Cerrar sesión</button>
+        </form>
+    @else
+        <a href="{{ route('login') }}" class="boton-nav">Iniciar sesión</a>
+        <a href="{{ route('register.show') }}" class="boton-nav">Registrarse</a>
+    @endif
         <button type="button" onclick="toggleCarrito()" class="boton-nav">🛒 Carrito (<span id="cantidadCarrito">0</span>)</button>
     </div>
 </header>
@@ -149,37 +155,30 @@
 function finalizarCompra() {
     if (!carrito.length) return alert('Tu carrito está vacío');
 
-    const total = parseFloat(document.getElementById('totalCarrito').textContent);
-    const productos = carrito.map(p => ({ id: p.id, cantidad: p.cantidad }));
-    const usuarioId = {{ session('usuario_id') ? 'true' : 'false' }};
+    // Calcular total
+    let total = 0;
+    carrito.forEach(p => {
+        const productoDiv = document.querySelector(`.producto[data-id="${p.id}"]`);
+        const precioStr = productoDiv?.querySelector('.precio')?.innerText.replace('€', '').replace(',', '.');
+        const precio = parseFloat(precioStr);
+        total += precio * p.cantidad;
+    });
 
-    let correo = null;
-    if (!usuarioId) {
-        correo = prompt("Introduce tu correo para recibir el pedido:");
-        if (!correo) return alert("Debes introducir un correo válido.");
-    }
+    // Guardar total en localStorage para usar en pago.blade.php
+    localStorage.setItem('carritoTotal', total.toFixed(2));
 
-    fetch('/realizar-pedido', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: JSON.stringify({ productos, total, correo })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            alert("Pedido realizado con éxito.");
-            localStorage.removeItem('carrito');
-            location.reload();
-        } else {
-            alert("Error al realizar el pedido.");
-        }
-    })
-    .catch(() => alert("Error de servidor."));
+    // Redirigir a formulario de dirección / correo
+    window.location.href = '/confirmar-pedido';
 }
 </script>
+
+<script>
+function toggleMenu() {
+    const menu = document.getElementById('menuUsuario');
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+</script>
+
 
 
 </body>

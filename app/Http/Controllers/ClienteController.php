@@ -106,4 +106,50 @@ class ClienteController extends Controller
         session()->flush();
         return redirect()->route('cliente.tienda');
     }
+
+    public function misPedidos()
+    {
+        $usuarioId = session('usuario_id');
+        $pedidos = \App\Models\Pedido::where('usuario_id', $usuarioId)->get();
+        return view('misPedidos', compact('pedidos'));
+    }
+
+    public function miInformacion()
+    {
+        $usuario = \App\Models\User::find(session('usuario_id'));
+
+        if (!$usuario) {
+            return redirect()->route('login')->with('error', 'Debes iniciar sesión.');
+        }
+
+        return view('miInformacion', compact('usuario'));
+    }
+    public function actualizarInformacion(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . session('usuario_id'),
+            'direccion' => 'required|string|max:255',
+            'password' => 'nullable|string|min:6',
+        ]);
+
+        $usuario = User::find(session('usuario_id'));
+
+        if (!$usuario) {
+            return redirect()->back()->with('error', 'Usuario no encontrado');
+        }
+
+        $usuario->nombre = $request->nombre;
+        $usuario->email = $request->email;
+        $usuario->direccion = $request->direccion;
+
+        if ($request->filled('password')) {
+            $usuario->password = Hash::make($request->password);
+        }
+
+        $usuario->save();
+
+        return redirect()->back()->with('success', 'Información actualizada correctamente');
+    }
+
 }

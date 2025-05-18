@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('usuario_id')->nullable();
-            $table->string('correo')->nullable(); // Para no registrados
-            $table->json('productos');
-            $table->decimal('total', 8, 2);
-            $table->string('estado')->default('pendiente');
+            $table->string('correo');         // Para usuarios no registrados
+            $table->string('direccion')->nullable(); // ✅      // Dirección de envío
+            $table->json('productos');                    // Lista de productos
+            $table->decimal('total', 8, 2);               // Precio total
+            $table->string('estado')->default('pendiente'); // Estado del pedido
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.

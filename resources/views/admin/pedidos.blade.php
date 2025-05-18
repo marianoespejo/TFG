@@ -101,6 +101,7 @@
                 <th>ID</th>
                 <th>Usuario</th>
                 <th>Email</th>
+                <th>Dirección</th>
                 <th>Productos</th>
                 <th>Total (€)</th>
                 <th>Estado</th>
@@ -118,7 +119,8 @@
                             -
                         @endif
                     </td>
-                    <td>{{ $pedido->email ?? '-' }}</td>
+                    <td>{{ $pedido->correo ?? '-' }}</td>
+                    <td>{{ $pedido->direccion ?? '-' }}</td>
                     <td>
                         @foreach ($pedido->productos as $producto)
                             ID: {{ $producto['id'] }} (x{{ $producto['cantidad'] }})<br>

@@ -82,7 +82,7 @@ class AdminController extends Controller
 
     public function verPedidos()
     {
-        $pedidos = Pedido::latest()->get();
+        $pedidos = Pedido::with('usuario')->orderByDesc('created_at')->get();
         return view('admin.pedidos', compact('pedidos'));
     }
 }
