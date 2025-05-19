@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Registrarse | ESMA</title>
+    <title>Registrarse | ESMO</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #f7f4f2; margin: 0; padding: 40px; color: #333; }
         form { background: white; padding: 30px; max-width: 400px; margin: auto; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }

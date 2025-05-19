@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Finalizar Pedido | ESMA</title>
+    <title>Finalizar Pedido | ESMO</title>
     <style>
         body { font-family: sans-serif; padding: 40px; background: #fdf9f8; }
         .contenedor { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }

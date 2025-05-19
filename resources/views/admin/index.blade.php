@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>ESMA | Administración de Productos</title>
+    <title>ESMO | Administración de Productos</title>
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;

@@ -53,7 +53,7 @@ class PagoController extends Controller
                 'amount' => intval($request->total * 100),
                 'currency' => 'eur',
                 'source' => $request->stripeToken,
-                'description' => 'Pago en ESMA',
+                'description' => 'Pago en ESMO',
             ]);
         } catch (\Exception $e) {
             return back()->with('error', 'Error en el pago: ' . $e->getMessage());
@@ -89,10 +89,10 @@ class PagoController extends Controller
             }
 
             Mail::raw(
-                "Gracias por tu compra en ESMA 💎\n\nTu pedido:\n" . $detalle .
+                "Gracias por tu compra en ESMO 💎\n\nTu pedido:\n" . $detalle .
                 "\nDirección: $direccion\nTotal: €" . number_format($pedido->total, 2, ',', '.'),
                 function ($m) use ($pedido) {
-                    $m->to($pedido->correo)->subject('Resumen de tu pedido ESMA');
+                    $m->to($pedido->correo)->subject('Resumen de tu pedido ESMO');
                 }
             );
         }

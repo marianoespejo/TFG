@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Editar producto | ESMA</title>
+    <title>Editar producto | ESMO</title>
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;

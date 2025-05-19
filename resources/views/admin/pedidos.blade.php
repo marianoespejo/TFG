@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>ESMA | Gestión de Pedidos</title>
+    <title>ESMO | Gestión de Pedidos</title>
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;

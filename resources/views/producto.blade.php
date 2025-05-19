@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>{{ $producto->nombre }} | ESMA</title>
+    <title>{{ $producto->nombre }} | ESMO</title>
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
